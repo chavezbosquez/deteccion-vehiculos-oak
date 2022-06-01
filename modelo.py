@@ -36,18 +36,23 @@ xout_nn = pipeline.createXLinkOut()
 xout_nn.setStreamName("nn")
 detection_nn.out.link(xout_nn.input)
 
-def displayFrame(name, frame):
-    color = (255, 0, 0)
-    verde = (36, 255, 12)
+azul = (255, 0, 0)
+verde = (36, 255, 12)
+titulo = "Prueba de laboratorio"
+
+def displayFrame(frame):
     for detection in detections:
         if detection.label == 7:
             bbox = frameNorm(frame, (detection.xmin, detection.ymin, detection.xmax, detection.ymax))
             #cv2.putText(frame, "Auto", (bbox[0]+10, bbox[1]+20), cv2.FONT_HERSHEY_TRIPLEX, 0.5, color)
             #cv2.putText(frame, f"{int(detection.confidence * 100)}%", (bbox[0] + 10, bbox[1] + 40), cv2.FONT_HERSHEY_TRIPLEX, 0.5, color)
-            cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), color, 2)
-            cv2.putText(frame, 'Auto ' + f"{int(detection.confidence * 100)}%", (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, verde, 2)
+            cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), azul, 2)                            # Ventana 300x300:  #0.6        #2
+            cv2.putText(frame, 'Auto ' + f"{int(detection.confidence * 100)}%", (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, verde, 1)
     # Show the frame
-    cv2.imshow(name, frame)
+    cv2.imshow(titulo, frame)
+
+cv2.namedWindow(titulo, cv2.WINDOW_NORMAL)
+cv2.resizeWindow(titulo, 800,800)
 
 # Pipeline is now finished, and we need to find an available device to run our pipeline
 # we are using context manager here that will dispose the device after we stop using it
@@ -99,7 +104,7 @@ with depthai.Device(pipeline) as device:
             # After all the drawing is finished, we show the frame on the screen
             cv2.imshow("Prueba de laboratorio", frame)
             '''
-            displayFrame("rgb", frame)
+            displayFrame(titulo, frame)
         # at any time, you can press "q" and exit the main loop, therefore exiting the program itself
         if cv2.waitKey(1) == ord('q'):
             break
