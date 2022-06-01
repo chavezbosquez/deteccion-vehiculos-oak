@@ -52,7 +52,7 @@ def displayFrame(frame):
     cv2.imshow(titulo, frame)
 
 cv2.namedWindow(titulo, cv2.WINDOW_NORMAL)
-cv2.resizeWindow(titulo, 800,800)
+cv2.resizeWindow(titulo, 600,600)
 
 # Pipeline is now finished, and we need to find an available device to run our pipeline
 # we are using context manager here that will dispose the device after we stop using it
@@ -104,7 +104,7 @@ with depthai.Device(pipeline) as device:
             # After all the drawing is finished, we show the frame on the screen
             cv2.imshow("Prueba de laboratorio", frame)
             '''
-            displayFrame(titulo, frame)
+            displayFrame(frame)
         # at any time, you can press "q" and exit the main loop, therefore exiting the program itself
         if cv2.waitKey(1) == ord('q'):
             break
