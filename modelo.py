@@ -11,10 +11,10 @@ pipeline = depthai.Pipeline()
 # Solo utilizar la camara central (a Color)
 cam_rgb = pipeline.createColorCamera()
 cam_rgb.setPreviewSize(300, 300)  # 300x300 será el tamaño de previsualización de cada frame, disponible como salida del nodo
-#####cam_rgb.setPreviewKeepAspectRatio(False)
+#cam_rgb.setPreviewKeepAspectRatio(False)
 cam_rgb.setInterleaved(False)
 
-# Next, we want a neural network that will produce the detections
+# Red neuronal para hacer las detecciones
 detection_nn = pipeline.createMobileNetDetectionNetwork()
 # Blob is the Neural Network file, compiled for MyriadX. It contains both the definition and weights of the model
 # We're using a blobconverter tool to retreive the MobileNetSSD blob automatically from OpenVINO Model Zoo
