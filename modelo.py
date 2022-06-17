@@ -45,14 +45,17 @@ def displayFrame(frame):
             cv2.putText(frame, 'Auto ' + f"{int(detection.confidence * 100)}%", (bbox[0], bbox[1]-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, verde, 1)
         # Bicicleta
         if detection.label == 2:
+            bbox = frameNorm(frame, (detection.xmin, detection.ymin, detection.xmax, detection.ymax))
             cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), rojo, 2)
             cv2.putText(frame, 'Bici ' + f"{int(detection.confidence * 100)}%", (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, azul, 1)
         # Autobus
         if detection.label == 6:
+            bbox = frameNorm(frame, (detection.xmin, detection.ymin, detection.xmax, detection.ymax))
             cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), blanco, 2)
             cv2.putText(frame, 'Autobus ' + f"{int(detection.confidence * 100)}%", (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, negro, 1)
         # Motocicleta
         if detection.label == 14:
+            bbox = frameNorm(frame, (detection.xmin, detection.ymin, detection.xmax, detection.ymax))
             cv2.rectangle(frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), negro, 2)
             cv2.putText(frame, 'Motocicleta ' + f"{int(detection.confidence * 100)}%", (bbox[0], bbox[1] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, blanco, 1)
     # Show the frame
