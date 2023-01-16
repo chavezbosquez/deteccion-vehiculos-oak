@@ -12,6 +12,13 @@ from datetime import datetime
 import locale
 import cv2
 
+# Nombre del archivo acorde a la fecha y hora
+locale.setlocale(locale.LC_TIME, "")
+ahora = datetime.now()
+nombre_archivo = ahora.strftime('%d-%B-%Y-%H_%M_%S')
+archivo_h265   = nombre_archivo + '.h265'
+archivo_mp4    = nombre_archivo + '.mp4'
+
 # Crear pipeline
 pipeline = dai.Pipeline()
 
@@ -53,7 +60,7 @@ with dai.Device(pipeline) as device:
     preview = device.getOutputQueue('preview')
 
     # El archivo .h265 es un 'raw stream' (no es reproducible)
-    with open('video.h265', 'wb') as videoFile:
+    with open(archivo_h265, 'wb') as videoFile:
         print("Press Ctrl+C to stop encoding...")
         try:
             while True:
@@ -70,11 +77,8 @@ with dai.Device(pipeline) as device:
             pass    # Interrupción del teclado (Ctrl+C)
 
     # Crear video MP4
-    locale.setlocale(locale.LC_TIME, "")
-    ahora = datetime.now()
-    nombre_archivo = ahora.strftime('%d-%B-%Y-%H_%M_%S') + '.mp4'
-    #os.system("ffmpeg -framerate 30 -i video.h265 -c copy video.mp4")
-    comando = 'ffmpeg -framerate 30 -i video.h265 -c copy ' + nombre_archivo
-    os.system(comando)
-    os.system('rm video.h265')
+    comando = 'ffmpeg -framerate 30 -i ' + archivo_h265 + ' -c copy ' + archivo_mp4
     print(comando)
+    os.system(comando)
+    if os.path.isfile(archivo_mp4):     # Si se creó el archivo MP4 entonces eliminar el archivo h265
+        os.system('rm ' + archivo_h265)
